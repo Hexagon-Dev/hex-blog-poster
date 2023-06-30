@@ -11,9 +11,6 @@ import App from './App.vue';
 
 import './assets/main.css';
 
-// eslint-disable-next-line no-console
-console.log('ENV VARIABLES', import.meta.env);
-
 const app = createApp(App);
 
 app.use(authStore);
