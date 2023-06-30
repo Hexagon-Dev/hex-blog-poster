@@ -17,29 +17,50 @@
         UPDATED AT {{ article?.updated_at ?? 'No date' }}
       </div>
 
-      <div class="!ml-auto">
-        <router-link :to="`/articles/${article.id}`" class="btn-default">
-          OPEN ARTICLE
+      <div class="!ml-auto space-x-2">
+        <router-link :to="`/articles/${article.id}`" class="btn-default inline-block">
+          VIEW
         </router-link>
 
         <router-link
           v-if="$store.getters['getUser']"
           :to="`/articles/${article.id}/edit`"
-          class="btn-default ml-2"
+          class="btn-default inline-block"
         >
-          EDIT ARTICLE
+          EDIT
         </router-link>
+
+        <button
+          v-if="$store.getters['getUser']"
+          class="btn-default"
+          @click="deleteArticle(article)"
+        >
+          DELETE
+        </button>
       </div>
     </div>
   </article>
 </template>
 
 <script>
+import { convertSqlToDate } from '@/plugins/utils';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { articlesCollection } from '@/plugins/firebase';
+
 export default {
   props: {
     article: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    convertSqlToDate,
+    deleteArticle(article) {
+      // eslint-disable-next-line no-restricted-globals
+      if (confirm(`Are you sure you want to delete article "${article.title}"?`)) {
+        deleteDoc(doc(articlesCollection, article.id));
+      }
     },
   },
 };

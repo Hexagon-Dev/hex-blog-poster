@@ -10,7 +10,7 @@
     <form
       v-if="!loading && form"
       class="flex flex-col space-y-4"
-      @submit.prevent="createPost"
+      @submit.prevent="createArticle"
     >
       <div>
         <label for="title" class="block">
@@ -72,6 +72,7 @@ import { updateDoc, addDoc, doc } from 'firebase/firestore';
 import { useDocument } from 'vuefire';
 import { articlesCollection, firebaseDB } from '@/plugins/firebase';
 import Loading from '@/components/Loading.vue';
+import { convertDateToSql } from '@/plugins/utils';
 
 export default {
   components: { Loading },
@@ -94,18 +95,18 @@ export default {
     }
   },
   methods: {
-    async createPost() {
+    async createArticle() {
       this.error = null;
 
       this.loading = true;
 
-      const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      const now = convertDateToSql(new Date());
 
       try {
         if (this.$route.params.id) {
           await updateDoc(
             doc(firebaseDB, 'articles', this.$route.params.id),
-            { ...this.form, created_at: now, updated_at: now },
+            { ...this.form, updated_at: now },
           );
         } else {
           await addDoc(
@@ -114,11 +115,11 @@ export default {
           );
         }
 
-        alert(`Post was successfully ${this.$route.params.id ? 'updated' : 'created'}.`);
+        alert(`Article was successfully ${this.$route.params.id ? 'updated' : 'created'}.`);
 
         this.$router.push('/');
       } catch (error) {
-        this.error = 'Failed to create post, please try again later or contact support';
+        this.error = 'Failed to create article, please try again later or contact support';
       }
 
       this.loading = false;
