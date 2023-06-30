@@ -11,6 +11,9 @@ import App from './App.vue';
 
 import './assets/main.css';
 
+// eslint-disable-next-line no-console
+console.log('ENV VARIABLES', import.meta.env);
+
 const app = createApp(App);
 
 app.use(authStore);
@@ -28,12 +31,11 @@ app.use(VueFire, {
   ],
 });
 
+// eslint-disable-next-line consistent-return
 router.beforeEach((to) => {
   if (to.meta.requiresAuth && !authStore.getters.getUser) {
     return { path: '/' };
   }
-
-  return to;
 });
 
 app.use(router);
