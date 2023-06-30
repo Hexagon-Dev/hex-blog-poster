@@ -12,10 +12,10 @@
       <div class="!ml-auto">
         <NavButton v-if="!user" path="/login" label="LOGIN" />
 
-        <div class="space-x-2 flex" v-else>
+        <div v-else class="space-x-2 flex">
           <NavButton path="/profile" label="PROFILE" :auth-only="true" />
 
-          <button @click="logout" class="nav-btn bg-cyan-200 hover:bg-cyan-100">
+          <button class="nav-btn bg-cyan-200 hover:bg-cyan-100" @click="logout">
             LOGOUT
           </button>
         </div>
@@ -39,16 +39,16 @@
 </template>
 
 <script>
-import { signOut } from 'firebase/auth'
-import NavButton from "@/components/NavButton.vue";
-import {auth} from "@/plugins/firebase";
+import { signOut } from 'firebase/auth';
+import NavButton from '@/components/NavButton.vue';
+import { auth } from '@/plugins/firebase';
 
 export default {
-  components: {NavButton},
+  components: { NavButton },
   computed: {
     user() {
-      return this.$store.getters['getUser'];
-    }
+      return this.$store.getters.getUser;
+    },
   },
   methods: {
     logout() {

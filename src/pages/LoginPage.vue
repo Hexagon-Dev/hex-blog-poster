@@ -1,31 +1,51 @@
 <template>
   <div class="mx-auto xl:w-1/2 w-full">
-      <h2 class="font-extrabold text-4xl mb-2 text-center">LOGIN</h2>
+    <h2 class="font-extrabold text-4xl mb-2 text-center">
+      LOGIN
+    </h2>
 
-    <form v-if="!loading" @submit.prevent="login" class="flex flex-col space-y-4">
+    <form v-if="!loading" class="flex flex-col space-y-4" @submit.prevent="login">
       <div>
         <label for="email" class="block">EMAIL</label>
-        <input type="email" v-model="email" class="input-default" id="email" required minlength="3">
+        <input
+          id="email"
+          v-model="email"
+          type="email"
+          class="input-default"
+          required
+          minlength="3"
+        >
       </div>
 
       <div>
         <label for="password" class="block">PASSWORD</label>
-        <input type="password" v-model="password" class="input-default" id="password" required minlength="8">
+        <input
+          id="password"
+          v-model="password"
+          type="password"
+          class="input-default"
+          required
+          minlength="8"
+        >
       </div>
 
-      <button :disabled="loading" class="btn-default">LOGIN</button>
+      <button :disabled="loading" class="btn-default">
+        LOGIN
+      </button>
     </form>
 
     <Loading v-else class="h-64" />
 
-    <p class="text-red-600 mt-2">{{ error }}</p>
+    <p class="text-red-600 mt-2">
+      {{ error }}
+    </p>
   </div>
 </template>
 
 <script>
 import { auth } from '@/plugins/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import Loading from "@/components/Loading.vue";
+import Loading from '@/components/Loading.vue';
 
 export default {
   components: { Loading },
@@ -38,7 +58,7 @@ export default {
     };
   },
   created() {
-    if (this.$store.getters['getUser']) {
+    if (this.$store.getters.getUser) {
       this.$router.push('/');
     }
   },
@@ -49,6 +69,7 @@ export default {
       let response = null;
 
       this.loading = true;
+
       try {
         response = await signInWithEmailAndPassword(auth, this.email, this.password);
       } catch (error) {
@@ -57,7 +78,7 @@ export default {
         }
 
         if (error.code === 'auth/wrong-password') {
-          this.error = 'Password is incorrect'
+          this.error = 'Password is incorrect';
         }
       }
       this.loading = false;

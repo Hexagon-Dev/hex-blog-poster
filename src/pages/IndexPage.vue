@@ -1,9 +1,11 @@
 <template>
   <main>
-    <h2 class="font-extrabold text-4xl mb-2">Articles</h2>
+    <h2 class="font-extrabold text-4xl mb-2">
+      Articles
+    </h2>
 
     <div v-if="articles" class="flex flex-col space-y-4">
-      <ArticlePost v-for="article in articles" :article="article" />
+      <ArticlePost v-for="article in articles" :key="article.id" :article="article" />
     </div>
 
     <Loading v-else class="h-64" />
@@ -13,17 +15,13 @@
 <script>
 import ArticlePost from '@/components/ArticlePost.vue';
 import { articlesCollection } from '@/plugins/firebase';
-import Loading from "@/components/Loading.vue";
+import Loading from '@/components/Loading.vue';
 
 export default {
-  components: {Loading, ArticlePost },
+  components: { Loading, ArticlePost },
   data() {
-    return {
-      articles: null,
-    };
+    return { articles: null };
   },
-  firestore: {
-    articles: articlesCollection,
-  },
+  firestore: { articles: articlesCollection },
 };
 </script>

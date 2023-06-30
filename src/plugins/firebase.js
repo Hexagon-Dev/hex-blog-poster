@@ -13,8 +13,13 @@ const firebaseApp = initializeApp({
 
 const firebaseDB = getFirestore(firebaseApp);
 
-const articlesCollection = collection(firebaseDB, 'articles')
+const articlesCollection = collection(firebaseDB, 'articles');
 
-const auth = getAuth()
+const auth = getAuth();
 
-export { firebaseApp, auth, articlesCollection, firebaseDB }
+export {
+  firebaseApp,
+  auth,
+  articlesCollection,
+  firebaseDB,
+};

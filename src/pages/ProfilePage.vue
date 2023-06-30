@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2 class="text-3xl font-black mb-2">PROFILE</h2>
+    <h2 class="text-3xl font-black mb-2">
+      PROFILE
+    </h2>
 
     <div>
       <p>EMAIL: {{ user?.email ?? 'NONE' }}</p>
@@ -14,8 +16,8 @@
 export default {
   computed: {
     user() {
-      return this.$store.getters['getUser'];
-    }
-  }
+      return this.$store.getters.getUser;
+    },
+  },
 };
 </script>

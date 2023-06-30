@@ -1,13 +1,13 @@
 import { createApp } from 'vue';
-import App from './App.vue';
 
 import { VueFire, VueFireAuth, VueFireFirestoreOptionsAPI } from 'vuefire';
-import { firebaseApp } from './plugins/firebase.js';
 
 import * as VueRouter from 'vue-router';
 import { routes } from '@/routes';
 
 import { authStore } from '@/store/auth';
+import { firebaseApp } from './plugins/firebase';
+import App from './App.vue';
 
 import './assets/main.css';
 
@@ -29,9 +29,11 @@ app.use(VueFire, {
 });
 
 router.beforeEach((to) => {
-  if (to.meta.requiresAuth && !authStore.getters['getUser']) {
+  if (to.meta.requiresAuth && !authStore.getters.getUser) {
     return { path: '/' };
   }
+
+  return to;
 });
 
 app.use(router);
